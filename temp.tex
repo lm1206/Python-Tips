@@ -1,0 +1,51 @@
+\documentclass{ctexart} % Default font size is 12pt, it can be changed here
+\ctexset{section/format = {\Large\bfseries}}
+\usepackage{geometry} % Required to change the page size to A4
+\geometry{a4paper} % Set the page size to be A4 as opposed to the default US Letter
+\geometry{left=1.6cm,right=1.6cm,top=3.5cm,bottom=3.5cm}
+%\usepacjage{subfigure}
+\usepackage{graphicx} % Required for including pictures
+\usepackage{amsmath}
+\usepackage{amssymb,bm}
+\usepackage{enumerate}
+\begin{document}
+ 假设 5个人分别为： $x_1,x_2,x_3,x_4,x_5$\\
+ 假设5天分别为：  $y_1,y_2,y_3,y_4,y_5$\\
+则我用 一个矩阵表示他们的考勤安排：
+\begin{equation}
+\begin{array}{cccccc}
+ &y_1&y_2&y_3&y_4&y_5\\
+x_1&1&1&0&0&0\\
+x_2&0&1&1&0&0\\
+x_3&0&0&1&1&0\\
+x_4&0&0&0&1&1\\
+x_5&1&0&0&0&1
+\end{array}
+\end{equation}
+1表示值班 ，0表示休息，显然矩阵中必须有 10个1，15个0\\
+需要满足的三个条件为： 
+\begin{itemize}
+\item  1. 每一行相加等于2 
+\item  2. 每一列相加等于2
+\item  3. 行列式值非0
+\end{itemize}
+
+
+很显然，任意对调两行或者两列，得到的新的矩阵依然满足以上的条件，也就意味着一种排班方法。我把上面那种排班方法记为
+\begin{equation}
+[x_1,x_2,x_3,x_4,x_5]\times[y_1,y_2,y_3,y_4,y_5]
+\end{equation}
+都对应着一种排班 方法。\\
+
+假设存在一种排班方法：$[x‘_1,x’_2,x‘_3,x’_4,x‘_5]\times[y‘_1,y’_2,y‘_3,y’_4,y‘_5]$
+\begin{enumerate}[(1)]
+\item 做映射$y_1\rightarrow y'_1$
+\item 将$y_1$中的两个员工分别映射成$x_1\rightarrow x'_1$和$x_2\rightarrow x'_2$
+\item 将$x_1$值班的另一天分映射成$y'_2$（假设为$y_2$）,一起值班的人映射成$x'_5$（假设为$x_5$）,
+\item 将$x_2$值班的另一天分映射成$y'_3$（假设为$y_3$）,一起值班的人映射成给$x'_3$（假设为$x_3$）,
+\item 将$x_5$值班的另一天分映射成$y'_5$（假设为$y_5$）,一起值班的人映射成$x'_4$(假设为$x_4$）,
+\item 将$x_3$值班的另一天分映射成$y'_4$（只能是$y_4$）
+\end{enumerate}
+按以上的方案，$[x_1,x_2,x_3,x_4,x_5]\times[y_1,y_2,y_3,y_4,y_5]$就可以和$[x‘_1,x’_2,x‘_3,x’_4,x‘_5]\times[y‘_1,y’_2,y‘_3,y’_4,y‘_5]$完成一个映射关系。
+
+\end{document}
