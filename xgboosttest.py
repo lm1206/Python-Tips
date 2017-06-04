@@ -49,3 +49,27 @@ score = roc_auc_score(X_valid[target].values, check)
 
 imp = get_importance(gbm, features)
  print('Importance array: ', imp)
+ 
+ 
+ param['objective'] = 'multi:softmax'
+# scale weight of positive examples
+param['eta'] = 0.1
+param['max_depth'] = 6
+param['silent'] = 1
+param['nthread'] = 4
+param['num_class'] = 6
+watchlist = [ (xg_train,'train'), (xg_test, 'test') ]
+num_round = 5
+bst = xgb.train(param, xg_train, num_round, watchlist );
+# get prediction
+pred = bst.predict( xg_test );
+print ('predicting, classification error=%f' % (sum( int(pred[i]) != test_Y[i] for i in range(len(test_Y))) / float(len(test_Y)) ))
+# do the same thing again, but output probabilities
+param['objective'] = 'multi:softprob'
+bst = xgb.train(param, xg_train, num_round, watchlist );
+# Note: this convention has been changed since xgboost-unity
+# get prediction, this is in 1D array, need reshape to (ndata, nclass)
+yprob = bst.predict( xg_test ).reshape( test_Y.shape[0], 6 )
+ylabel = np.argmax(yprob, axis=1)
+print ('predicting, classification error=%f' % (sum( int(ylabel[i]) != test_Y[i] for i in range(len(test_Y))) / float(len(test_Y)) ))
+
